@@ -11,7 +11,8 @@ namespace Labb3WebbMVC.Models
         [Key]
         public int Id { get; set; }
         public string Title { get; set; }
-        public double Duration { get; set; }
+        public string Duration { get; set; }
+        public string Rating { get; set; }
         public DateTime StartingTime { get; set; }
         public Salon Salon { get; set; }
     }
