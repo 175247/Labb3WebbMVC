@@ -32,13 +32,14 @@ namespace Labb3WebbMVC.Controllers
             movieFromDb[0].Salon.Number = selectedSalon.Number;
             movieFromDb[0].Viewing = selectedViews;
 
-            // Skapa ett objekt med alla properties i modellen Movies genom att selecta allt i movies och joina följande...
-            // Join movie.Salong on salong.Id and proceed to join on viewing.MovieId
-            // Printa start timerna där viewing.MoeiId = Id som skickas in i den här metoden.
-            // Printa salong nummer för salong.id som vi joinat på
-            // Printa RemainingSeats för salong.id som vi joinat på
-
-            return View(movieFromDb);//query);
+            if (movieFromDb[0].Title.Contains("Pontus"))
+            {
+                return View("DisplayPontus", movieFromDb);
+            }
+            else
+            {
+                return View(movieFromDb);
+            }
         }
 
         // GET: Movies/Details/5
