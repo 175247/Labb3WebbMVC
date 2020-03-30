@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Labb3WebbMVC.Models
 {
-    public class Salon
+    public class Viewing
     {
         [Key]
         public int Id { get; set; }
-        public int Number { get; set; }
-        public int SeatCapacity { get; set; }
-        public int RemainingSeats { get; set; }
+        public DateTime StartTime { get; set; }
+        public int MovieId { get; set; }
     }
 }

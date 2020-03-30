@@ -35,9 +35,6 @@ namespace Labb3WebbMVC.Migrations
                     b.Property<int?>("SalonId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("StartingTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -61,9 +58,32 @@ namespace Labb3WebbMVC.Migrations
                     b.Property<int>("RemainingSeats")
                         .HasColumnType("int");
 
+                    b.Property<int>("SeatCapacity")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("SalonList");
+                });
+
+            modelBuilder.Entity("Labb3WebbMVC.Models.Viewing", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("Viewing");
                 });
 
             modelBuilder.Entity("Labb3WebbMVC.Models.Movie", b =>
@@ -71,6 +91,15 @@ namespace Labb3WebbMVC.Migrations
                     b.HasOne("Labb3WebbMVC.Models.Salon", "Salon")
                         .WithMany()
                         .HasForeignKey("SalonId");
+                });
+
+            modelBuilder.Entity("Labb3WebbMVC.Models.Viewing", b =>
+                {
+                    b.HasOne("Labb3WebbMVC.Models.Movie", null)
+                        .WithMany("Viewing")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

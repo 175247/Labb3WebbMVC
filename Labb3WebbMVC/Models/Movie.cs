@@ -13,7 +13,7 @@ namespace Labb3WebbMVC.Models
         public string Title { get; set; }
         public string Duration { get; set; }
         public string Rating { get; set; }
-        public DateTime StartingTime { get; set; }
+        public List<Viewing> Viewing { get; set; }
         public Salon Salon { get; set; }
     }
 }

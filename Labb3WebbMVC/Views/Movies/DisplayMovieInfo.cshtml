@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewData["Title"] = "DisplayMovieInfo";
+}
+@model IEnumerable<Labb3WebbMVC.Models.Movie>
+
+<br />
+
+    <iframe class="trailerFrame" src="https://www.youtube.com/embed/KAOdjqyG37A" allow="accelerometer;"allowfullscreen></iframe>
+    <div class="movieInfoPontus">
+
+        @foreach (var item in Model)
+        {
+        <h1>@Html.DisplayFor(modelItem => item.Title)
+            <span id="movieRating">Rating: @Html.DisplayFor(modelItem => item.Rating)</span>
+        </h1>
+        }
+    <p>Wayward prince and heir to the Bhutan throne, is crowned King Pontus I after an alien attack robs the earth of all lions.<br/>
+        Now the young king must navigate palace politics, the lack of roars left behind, and the emotional strings of his past life as a russian hacker.<br/><br/>
+        Watch it now, blyat!<br />
+        Rawr...</p>
+    </div>
+<div class="border p-3 mt-3">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="col-6">Start Time</th>
+                <th>Salon</th>
+                <th>Seats Left</th>
+                <th></th>
+                <th></th>
+            </tr>
+            @if (Model == null)
+            {
+                <tr>
+                    <td>
+                        No movies found.
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in Model)
+                {
+                    @foreach (var show in item.Viewing)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => show.StartTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Salon.Number)
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.Salon.RemainingSeats)</td>
+                            <td>
+                                <a asp-action="DisplayMovieInfo" asp-route-id="@item.Title" asp-controller="Movies" class="btn btn-success btn-sm">See Movie info</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </thead>
+    </table>
+</div>
+
+@section Scripts{ 
+    <script src="~/js/videoEmbedder.js"></script>
+}

@@ -24,6 +24,23 @@ namespace Labb3WebbMVC.Controllers
             return View(await _context.MovieList.ToListAsync());
         }
 
+        public async Task<IActionResult> DisplayMovieInfo(int id)
+        {
+            var movieFromDb = await _context.MovieList.Where(m => m.Id == id).ToListAsync();
+            var selectedSalon = await _context.SalonList.FirstOrDefaultAsync(s => s.Id == id);
+            var selectedViews = await _context.Viewing.Where(v => v.MovieId == id).ToListAsync();
+            movieFromDb[0].Salon.Number = selectedSalon.Number;
+            movieFromDb[0].Viewing = selectedViews;
+
+            // Skapa ett objekt med alla properties i modellen Movies genom att selecta allt i movies och joina följande...
+            // Join movie.Salong on salong.Id and proceed to join on viewing.MovieId
+            // Printa start timerna där viewing.MoeiId = Id som skickas in i den här metoden.
+            // Printa salong nummer för salong.id som vi joinat på
+            // Printa RemainingSeats för salong.id som vi joinat på
+
+            return View(movieFromDb);//query);
+        }
+
         // GET: Movies/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -163,9 +180,15 @@ namespace Labb3WebbMVC.Controllers
                     Salon = new Salon
                     {
                         Number = 1,
+                        SeatCapacity = 50,
                         RemainingSeats = 0
                     },
-                    StartingTime = new DateTime(2020, 04, 23, 20, 30, 00)
+                    Viewing = new List<Viewing>
+                    {
+                        new Viewing { StartTime = new DateTime(2020, 04, 23, 15, 45, 00) },
+                        new Viewing { StartTime = new DateTime(2020, 04, 23, 20, 30, 00) },
+                        new Viewing { StartTime = new DateTime(2020, 04, 27, 10, 15, 00) }
+                    }
                 });
 
                 await _context.MovieList.AddAsync(new Movie
@@ -176,9 +199,15 @@ namespace Labb3WebbMVC.Controllers
                     Salon = new Salon
                     {
                         Number = 2,
+                        SeatCapacity = 100,
                         RemainingSeats = 44
                     },
-                    StartingTime = new DateTime(2020, 04, 22, 20, 30, 00)
+                    Viewing = new List<Viewing>
+                    {
+                        new Viewing { StartTime = new DateTime(2020, 04, 23, 15, 45, 00) },
+                        new Viewing { StartTime = new DateTime(2020, 04, 25, 20, 30, 00) },
+                        new Viewing { StartTime = new DateTime(2020, 04, 27, 10, 15, 00) }
+                    }
                 });
                 await _context.SaveChangesAsync();
             }
@@ -188,7 +217,10 @@ namespace Labb3WebbMVC.Controllers
 
         public async Task<IActionResult> EmptyDb()
         {
-
+            foreach(var viewing in _context.Viewing)
+            {
+                _context.Viewing.Remove(viewing);
+            }
             foreach (var movie in _context.MovieList)
             {
                 _context.MovieList.Remove(movie);
