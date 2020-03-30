@@ -151,38 +151,44 @@ namespace Labb3WebbMVC.Controllers
 
         public async Task<IActionResult> SeedDb()
         {
-            await _context.MovieList.AddAsync(new Movie
-            {
-                Title = "Pontus: Bouncer of Shangri-La",
-                Duration = "13h 37min",
-                Rating = "5/7",
-                Salon = new Salon
-                {
-                    Number = 1,
-                    RemainingSeats = 0
-                },
-                StartingTime = new DateTime(2020, 04, 23, 20, 30, 00)
-            });
+            var movieFromDb = await _context.MovieList.FirstOrDefaultAsync(m => m.Rating == "5/7");
 
-            await _context.MovieList.AddAsync(new Movie
+            if (movieFromDb == null)
             {
-                Title = "The Matrix",
-                Duration = "2h 16min",
-                Rating = "8.7/10",
-                Salon = new Salon
+                await _context.MovieList.AddAsync(new Movie
                 {
-                    Number = 2,
-                    RemainingSeats = 44
-                },
-                StartingTime = new DateTime(2020, 04, 22, 20, 30, 00)
-            });
+                    Title = "Pontus: Bouncer of Shangri-La",
+                    Duration = "13h 37min",
+                    Rating = "5/7",
+                    Salon = new Salon
+                    {
+                        Number = 1,
+                        RemainingSeats = 0
+                    },
+                    StartingTime = new DateTime(2020, 04, 23, 20, 30, 00)
+                });
 
-            await _context.SaveChangesAsync();
-            return View("default");
+                await _context.MovieList.AddAsync(new Movie
+                {
+                    Title = "The Matrix",
+                    Duration = "2h 16min",
+                    Rating = "8.7/10",
+                    Salon = new Salon
+                    {
+                        Number = 2,
+                        RemainingSeats = 44
+                    },
+                    StartingTime = new DateTime(2020, 04, 22, 20, 30, 00)
+                });
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> EmptyDb()
         {
+
             foreach (var movie in _context.MovieList)
             {
                 _context.MovieList.Remove(movie);
@@ -192,8 +198,8 @@ namespace Labb3WebbMVC.Controllers
                 _context.SalonList.Remove(salon);
             }
             await _context.SaveChangesAsync();
-
-            return View("Index");
+            
+            return RedirectToAction("Index");
         }
     }
 }

@@ -6,25 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Labb3WebbMVC.Models;
-//using Microsoft.EntityFrameworkCore;
 
 namespace Labb3WebbMVC.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        //private CinemaContext ct;
-
-        public HomeController(ILogger<HomeController> logger)//, CinemaContext ct)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            //this.ct = ct;
         }
 
-        //public async Task<IActionResult> Index()
         public IActionResult Index()
         {
-            //return View(await ct.MovieList.ToListAsync());
             return View();
         }
 
