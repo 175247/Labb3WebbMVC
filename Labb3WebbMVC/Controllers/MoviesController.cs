@@ -29,7 +29,7 @@ namespace Labb3WebbMVC.Controllers
             var movieFromDb = await _context.MovieList.Where(m => m.Id == id).ToListAsync();
             var selectedSalon = await _context.SalonList.FirstOrDefaultAsync(s => s.Id == id);
             var selectedViews = await _context.Viewing.Where(v => v.MovieId == id).ToListAsync();
-            movieFromDb[0].Salon.Number = selectedSalon.Number;
+            //movieFromDb[0].Salon.Number = selectedSalon.Number; Prior to movie Salon prop out of Movie model
             movieFromDb[0].Viewing = selectedViews;
 
             if (movieFromDb[0].Title.Contains("Pontus"))
@@ -178,17 +178,38 @@ namespace Labb3WebbMVC.Controllers
                     Title = "Pontus: Bouncer of Shangri-La",
                     Duration = "13h 37min",
                     Rating = "5/7",
-                    Salon = new Salon
-                    {
-                        Number = 1,
-                        SeatCapacity = 50,
-                        RemainingSeats = 0
-                    },
                     Viewing = new List<Viewing>
                     {
-                        new Viewing { StartTime = new DateTime(2020, 04, 23, 15, 45, 00) },
-                        new Viewing { StartTime = new DateTime(2020, 04, 23, 20, 30, 00) },
-                        new Viewing { StartTime = new DateTime(2020, 04, 27, 10, 15, 00) }
+                        new Viewing 
+                        {
+                            Salon = new Salon
+                            {
+                                Number = 2,
+                                SeatCapacity = 100,
+                                RemainingSeats = 2
+                            },
+                            StartTime = new DateTime(2020, 04, 23, 15, 45, 00) 
+                        },
+                        new Viewing
+                        {
+                            Salon = new Salon
+                            {
+                                Number = 2,
+                                SeatCapacity = 100,
+                                RemainingSeats = 0
+                            },
+                            StartTime = new DateTime(2020, 04, 23, 20, 30, 00) 
+                        },
+                        new Viewing 
+                        {
+                            Salon = new Salon
+                            {
+                                Number = 1,
+                                SeatCapacity = 50,
+                                RemainingSeats = 4
+                            },
+                            StartTime = new DateTime(2020, 04, 27, 10, 15, 00) 
+                        }
                     }
                 });
 
@@ -197,17 +218,38 @@ namespace Labb3WebbMVC.Controllers
                     Title = "The Matrix",
                     Duration = "2h 16min",
                     Rating = "8.7/10",
-                    Salon = new Salon
-                    {
-                        Number = 2,
-                        SeatCapacity = 100,
-                        RemainingSeats = 44
-                    },
                     Viewing = new List<Viewing>
                     {
-                        new Viewing { StartTime = new DateTime(2020, 04, 23, 15, 45, 00) },
-                        new Viewing { StartTime = new DateTime(2020, 04, 25, 20, 30, 00) },
-                        new Viewing { StartTime = new DateTime(2020, 04, 27, 10, 15, 00) }
+                        new Viewing
+                        { 
+                            Salon = new Salon
+                            {
+                                Number = 1,
+                                SeatCapacity = 50,
+                                RemainingSeats = 44
+                            },
+                            StartTime = new DateTime(2020, 04, 23, 15, 45, 00) 
+                        },
+                        new Viewing
+                        {
+                            Salon = new Salon
+                            {
+                                Number = 1,
+                                SeatCapacity = 50,
+                                RemainingSeats = 17
+                            },
+                            StartTime = new DateTime(2020, 04, 25, 20, 30, 00) 
+                        },
+                        new Viewing
+                        {
+                            Salon = new Salon
+                            {
+                                Number = 2,
+                                SeatCapacity = 100,
+                                RemainingSeats = 91
+                            },
+                            StartTime = new DateTime(2020, 04, 27, 10, 15, 00)
+                        }
                     }
                 });
                 await _context.SaveChangesAsync();
