@@ -21,6 +21,7 @@ namespace Labb3WebbMVC.Controllers
         // GET: Movies
         public async Task<IActionResult> Index()
         {
+            _context.Database.Migrate();
             return View(await _context.MovieList.ToListAsync());
         }
 
@@ -254,9 +255,9 @@ namespace Labb3WebbMVC.Controllers
                 });
                 await _context.SaveChangesAsync();
             }
-
             return RedirectToAction("Index");
         }
+
 
         public async Task<IActionResult> EmptyDb()
         {
@@ -275,6 +276,12 @@ namespace Labb3WebbMVC.Controllers
             await _context.SaveChangesAsync();
             
             return RedirectToAction("Index");
+        }
+        public IActionResult RecreateDb()
+        {
+            _context.Database.EnsureDeleted();
+            _context.Database.Migrate();
+            return View("../Movies/Index");
         }
     }
 }

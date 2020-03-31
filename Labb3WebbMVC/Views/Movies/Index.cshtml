@@ -3,28 +3,19 @@
 }
 @model IEnumerable<Labb3WebbMVC.Models.Movie>
 
-<br />
 <div class="container">
-    <div class="col-2">
-        <h1>
-            Movies
-        </h1>
-        <a asp-action="SeedDb" asp-controller="Movies" class="btn btn-info form-control text-white mb-1">
-            Seed Database
-        </a>
-        <a asp-action="EmptyDb" asp-controller="Movies" class="btn btn-info form-control text-white">
-            Empty Database
-        </a>
-    </div>
+    <h1>
+        Bärras biå
+    </h1>
     <div class="border p-3 mt-3">
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th class="col-6">Title</th>
+                    <th>Title</th>
                     <th>Duration</th>
                     <th></th>
                 </tr>
-                @if (Model == null)
+                @if (Model == null || Model.Count() == 0)
                 {
                     <tr>
                         <td>
@@ -58,6 +49,19 @@
                 }
             </thead>
         </table>
+    </div>
+    <br />
+    <div>
+        <label>Debugging tools:</label>
+        <a asp-action="SeedDb" asp-controller="Movies" class="col-sm-2 btn btn-info form-control text-white mb-1">
+            Seed Db
+        </a>
+        <a asp-action="EmptyDb" asp-controller="Movies" class="col-sm-2 btn btn-info form-control text-white mb-1">
+            Empty Db
+        </a>
+        <a asp-action="RecreateDb" onclick="return confirm('Confirm recreation of Database. This may take up to 30 seconds.')" asp-controller="Movies" class="col-sm-2 btn btn-info form-control text-white mb-1">
+            Recreate Db
+        </a>
     </div>
 </div>
 

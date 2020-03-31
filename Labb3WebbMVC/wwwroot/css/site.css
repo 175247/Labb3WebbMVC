@@ -26,9 +26,15 @@ a {
 
 /* Sticky footer styles
 -------------------------------------------------- */
+#layoutFooter a {
+    display: inline-block;
+    width: auto;
+    height: auto;
+}
 html {
   font-size: 14px;
 }
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
