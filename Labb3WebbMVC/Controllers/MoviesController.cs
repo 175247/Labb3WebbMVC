@@ -28,9 +28,9 @@ namespace Labb3WebbMVC.Controllers
         public async Task<IActionResult> DisplayMovieInfo(int id)
         {
             var movieFromDb = await _context.MovieList.Where(m => m.Id == id).ToListAsync();
-            var selectedSalon = await _context.SalonList.FirstOrDefaultAsync(s => s.Id == id);
             var selectedViews = await _context.Viewing.Where(v => v.MovieId == id).ToListAsync();
-            //movieFromDb[0].Salon.Number = selectedSalon.Number; Prior to movie Salon prop out of Movie model
+            var salonList = await _context.SalonList.ToListAsync();
+            //selectedViews[0].Salon = selectedSalons[0].Salon;
             movieFromDb[0].Viewing = selectedViews;
 
             if (movieFromDb[0].Title.Contains("Pontus"))
@@ -254,8 +254,12 @@ namespace Labb3WebbMVC.Controllers
                     }
                 });
                 await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
 

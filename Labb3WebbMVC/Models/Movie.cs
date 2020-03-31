@@ -13,7 +13,6 @@ namespace Labb3WebbMVC.Models
         public string Title { get; set; }
         public string Duration { get; set; }
         public string Rating { get; set; }
-        public int ViewingId { get; set; }
         public ICollection<Viewing> Viewing { get; set; }
     }
 }

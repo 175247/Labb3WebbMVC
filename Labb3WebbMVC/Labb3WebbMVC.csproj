@@ -13,6 +13,22 @@
     <Compile Remove="Migrations\20200330155312_Explicit relationships.Designer.cs" />
     <Compile Remove="Migrations\20200331122818_Attempting different EF Relationships.cs" />
     <Compile Remove="Migrations\20200331122818_Attempting different EF Relationships.Designer.cs" />
+    <Compile Remove="Migrations\20200331213144_Changing to virtual properties in Models.cs" />
+    <Compile Remove="Migrations\20200331213144_Changing to virtual properties in Models.Designer.cs" />
+    <Compile Remove="Migrations\20200331213804_Added explicit foreignKey attributes.cs" />
+    <Compile Remove="Migrations\20200331213804_Added explicit foreignKey attributes.Designer.cs" />
+    <Compile Remove="Migrations\20200331214419_Added viewings to salon.cs" />
+    <Compile Remove="Migrations\20200331214419_Added viewings to salon.Designer.cs" />
+    <Compile Remove="Migrations\20200331214908_Added viewing to salon.cs" />
+    <Compile Remove="Migrations\20200331214908_Added viewing to salon.Designer.cs" />
+    <Compile Remove="Migrations\20200331220523_Adding viewing to Salon.cs" />
+    <Compile Remove="Migrations\20200331220523_Adding viewing to Salon.Designer.cs" />
+    <Compile Remove="Migrations\20200331221002_Added explicit relations.cs" />
+    <Compile Remove="Migrations\20200331221002_Added explicit relations.Designer.cs" />
+    <Compile Remove="Migrations\20200331221218_Added movie to salon.cs" />
+    <Compile Remove="Migrations\20200331221218_Added movie to salon.Designer.cs" />
+    <Compile Remove="Migrations\20200331221945_Added movie to Salon.cs" />
+    <Compile Remove="Migrations\20200331221945_Added movie to Salon.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
