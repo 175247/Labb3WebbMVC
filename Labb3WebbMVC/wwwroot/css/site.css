@@ -84,18 +84,16 @@ body {
     height: auto;
 }
 
-.movieInfo {
+.movieInfoPontus {
     border: solid #8a8a8a;
     width: auto;
     height: auto;
     margin-left: auto;
     margin-right: auto;
 }
-
 #movieTitle {
     font-size: xx-large;
 }
-
 #movieRating {
     font-size:medium;
 }

@@ -6,21 +6,61 @@
 
 <br />
 
-<iframe class="trailerFrame" src="https://www.youtube.com/embed/D4eJx-0g3Do" allow="accelerometer;" allowfullscreen></iframe>
-<div class="movieInfo">
+<iframe class="trailerFrame" src="https://www.youtube.com/embed/KAOdjqyG37A" allow="accelerometer;" allowfullscreen></iframe>
+<div class="movieInfoPontus">
 
     @foreach (var item in Model)
     {
         <h1>
             @Html.DisplayFor(modelItem => item.Title)
-            <span id="movieRating">Rating: @Html.DisplayFor(modelItem => item.Rating)</span>
-        </h1>
-    }
+        <span id="movieRating">Rating: @Html.DisplayFor(modelItem => item.Rating)</span>
+    </h1>
+}
     <p>
-        A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.
+        <br /><br />
+        Watch it now, blyat!<br />
+        Rawr...
     </p>
 </div>
-
-@{
-    await Html.RenderPartialAsync("_PartialDisplayMovieInfo", Model);
-}
+<div class="border p-3 mt-3">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="col-6">Start Time</th>
+                <th>Salon</th>
+                <th>Seats Left</th>
+                <th></th>
+                <th></th>
+            </tr>
+            @if (Model == null)
+            {
+                <tr>
+                    <td>
+                        No movies found.
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in Model)
+                {
+                    @foreach (var show in item.Viewing)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => show.StartTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => show.Salon.Number)
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => show.Salon.RemainingSeats)</td>
+                            <td>
+                                <a asp-action="DisplayMovieInfo" asp-route-id="@item.Id" asp-controller="Movies" class="btn btn-success btn-sm">See Movie info</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </thead>
+    </table>
+</div>
