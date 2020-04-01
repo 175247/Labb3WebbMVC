@@ -12,10 +12,12 @@ namespace Labb3WebbMVC.Controllers
     public class MoviesController : Controller
     {
         private readonly CinemaContext _context;
+        private List<Movie> selectedMovie;
 
         public MoviesController(CinemaContext context)
         {
             _context = context;
+            selectedMovie = new List<Movie>();
         }
 
         // GET: Movies
@@ -27,7 +29,7 @@ namespace Labb3WebbMVC.Controllers
 
         public async Task<IActionResult> DisplayMovieInfo(int id)
         {
-            var movieFromDb = await _context.MovieList.Where(m => m.Id == id).ToListAsync();
+            selectedMovie = await _context.MovieList.Where(m => m.Id == id).ToListAsync();
             var selectedViews = await _context.Viewing.Where(v => v.MovieId == id).ToListAsync();
             var salonList = await _context.SalonList.ToListAsync();
 
@@ -36,15 +38,23 @@ namespace Labb3WebbMVC.Controllers
                 item.Salon = salonList.Find(s => s.Id == item.SalonId);
             }
             
-            movieFromDb[0].Viewing = selectedViews;
-            if (movieFromDb[0].Title.Contains("Pontus"))
+            selectedMovie[0].Viewing = selectedViews;
+            if (selectedMovie[0].Title.Contains("Pontus"))
             {
-                return View("DisplayPontus", movieFromDb);
+                return View("DisplayPontus", selectedMovie);
             }
             else
             {
-                return View(movieFromDb);
+                return View(selectedMovie);
             }
+        }
+
+        public IActionResult BookTicketView(Viewing viewing)
+        {
+            Viewing selectedViewing = viewing;
+            // Needs to fetch more and merge as above.
+
+            return View(selectedViewing);
         }
 
         // GET: Movies/Details/5

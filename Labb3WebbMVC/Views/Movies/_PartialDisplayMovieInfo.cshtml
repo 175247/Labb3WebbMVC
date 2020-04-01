@@ -5,11 +5,10 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th class="col-6">Start Time</th>
+                <th>Start Time</th>
                 <th>Salon</th>
                 <th>Seats Left</th>
-                <th></th>
-                <th></th>
+                <td></td>
             </tr>
             @if (Model == null)
             {
@@ -34,7 +33,7 @@
                             </td>
                             <td>@Html.DisplayFor(modelItem => show.Salon.RemainingSeats)</td>
                             <td>
-                                <a asp-action="DisplayPontus" asp-route-id="@item.Id" asp-controller="Movies" class="btn btn-success btn-sm">See Movie info</a>
+                                <a asp-action="BookTicketView" asp-route-id="@show" asp-controller="Movies" class="btn btn-success btn-sm">See Movie info</a>
                             </td>
                         </tr>
                     }

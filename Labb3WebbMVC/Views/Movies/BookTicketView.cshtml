@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "BookTicketView";
+}
+@model IEnumerable<Labb3WebbMVC.Models.Viewing>
+
+<table>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(m => item.Movie.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Salon.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.StartTime)
+            </td>
+        </tr>
+    }
+
+</table>
