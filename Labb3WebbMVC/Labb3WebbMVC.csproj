@@ -29,6 +29,8 @@
     <Compile Remove="Migrations\20200331221218_Added movie to salon.Designer.cs" />
     <Compile Remove="Migrations\20200331221945_Added movie to Salon.cs" />
     <Compile Remove="Migrations\20200331221945_Added movie to Salon.Designer.cs" />
+    <Compile Remove="Migrations\20200401190939_Fixing snapshot error.cs" />
+    <Compile Remove="Migrations\20200401190939_Fixing snapshot error.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

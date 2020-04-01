@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Labb3WebbMVC.Migrations
 {
     [DbContext(typeof(CinemaContext))]
-    [Migration("20200331215135_Removed ViewingId from Movie")]
-    partial class RemovedViewingIdfromMovie
+    [Migration("20200401191821_Fixing snapshots")]
+    partial class Fixingsnapshots
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

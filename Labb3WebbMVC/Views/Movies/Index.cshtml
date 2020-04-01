@@ -52,14 +52,14 @@
     </div>
     <br />
     <div>
-        <label>Debugging tools:</label>
-        <a asp-action="SeedDb" asp-controller="Movies" class="col-sm-2 btn btn-info form-control text-white mb-1">
+        <label>Dev tools:</label>
+        <a asp-action="SeedDb" asp-controller="DevTools" class="col-sm-2 btn btn-info form-control text-white mb-1">
             Seed Db
         </a>
-        <a asp-action="EmptyDb" asp-controller="Movies" class="col-sm-2 btn btn-info form-control text-white mb-1">
+        <a asp-action="EmptyDb" asp-controller="DevTools" class="col-sm-2 btn btn-info form-control text-white mb-1">
             Empty Db
         </a>
-        <a asp-action="RecreateDb" onclick="return confirm('Confirm recreation of Database. This may take up to 30 seconds.')" asp-controller="Movies" class="col-sm-2 btn btn-info form-control text-white mb-1">
+        <a asp-action="RecreateDb" onclick="return confirm('Confirm recreation of Database. This may take up to 30 seconds.')" asp-controller="DevTools" class="col-sm-2 btn btn-info form-control text-white mb-1">
             Recreate Db
         </a>
     </div>
