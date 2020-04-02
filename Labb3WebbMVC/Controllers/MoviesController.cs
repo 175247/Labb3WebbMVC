@@ -51,9 +51,7 @@ namespace Labb3WebbMVC.Controllers
 
         public IActionResult BookTicketView(Viewing viewing)
         {
-            Viewing selectedViewing = viewing;
-            // Needs to fetch more and merge as above.
-
+            var selectedViewing = selectedMovie[0].Viewing.Where(v => v.Id == viewing.Id).ToList();
             return View(selectedViewing);
         }
 

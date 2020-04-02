@@ -33,7 +33,7 @@
                             </td>
                             <td>@Html.DisplayFor(modelItem => show.Salon.RemainingSeats)</td>
                             <td>
-                                <a asp-action="BookTicketView" asp-route-id="@show" asp-controller="Movies" class="btn btn-success btn-sm">See Movie info</a>
+                                <a asp-action="BookTicketView" asp-route-id="@show.Id" asp-controller="Movies" class="btn btn-success btn-sm">Book tickets!</a>
                             </td>
                         </tr>
                     }
