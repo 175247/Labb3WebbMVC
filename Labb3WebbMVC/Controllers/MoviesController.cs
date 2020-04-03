@@ -56,8 +56,9 @@ namespace Labb3WebbMVC.Controllers
             var movieDeserialized = JsonConvert.DeserializeObject<List<Movie>>(
                 HttpContext.Session.GetString("SessionMovie"));
 
-            var viewing = movieDeserialized[0].Viewing.Where(v => v.Id == id).ToList();
-            viewing[0].MovieTitle = movieDeserialized[0].Title;
+            var viewingToCast = movieDeserialized[0].Viewing.Where(v => v.Id == id).ToList();
+            viewingToCast[0].MovieTitle = movieDeserialized[0].Title;
+            var viewing = (Viewing)viewingToCast[0];
 
             return View(viewing);
         }

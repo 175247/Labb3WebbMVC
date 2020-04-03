@@ -3,25 +3,20 @@
     ViewData["Title"] = "BookTicketView";
 }
 
-@model IEnumerable<Labb3WebbMVC.Models.Viewing>
+@model Labb3WebbMVC.Models.Viewing
 
 <div>
-    <p>Here comes TABLE!!!</p>
-    <table>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(m => item.MovieTitle)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.Salon.Number)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => item.StartTime)
-                </td>
-            </tr>
-        }
-    </table>
-    <p>End of table. :(</p>
+<table class="table table-striped">
+    <tr>
+        <td>@Html.DisplayFor(model => model.Id)</td>
+        <td>@Html.DisplayFor(model => model.MovieId)</td>
+        <td>@Html.DisplayFor(model => model.MovieTitle)</td>
+        <td>@Html.DisplayFor(model => model.Salon.Id)</td>
+        <td>@Html.DisplayFor(model => model.Salon.Number)</td>
+        <td>@Html.DisplayFor(model => model.Salon.RemainingSeats)</td>
+        <td>@Html.DisplayFor(model => model.Salon.SeatCapacity)</td>
+        <td>@Html.DisplayFor(model => model.Salon)</td>
+        <td>@Html.DisplayFor(model => model.StartTime)</td>
+    </tr>
+</table>
 </div>
