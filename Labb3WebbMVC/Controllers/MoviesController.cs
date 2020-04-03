@@ -6,18 +6,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Labb3WebbMVC.Models;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace Labb3WebbMVC.Controllers
 {
     public class MoviesController : Controller
     {
         private readonly CinemaContext _context;
-        private List<Movie> selectedMovie;
+        //private List<Movie> selectedMovie;
+        // Spara ner selectedMovie i javascript istället
+        // Skicka sedan in det med parametrar i metoderna som behvöer det (t.ex. BookTicketView)
 
         public MoviesController(CinemaContext context)
         {
             _context = context;
-            selectedMovie = new List<Movie>();
+            //selectedMovie = new List<Movie>();
         }
 
         // GET: Movies
@@ -29,16 +33,14 @@ namespace Labb3WebbMVC.Controllers
 
         public async Task<IActionResult> DisplayMovieInfo(int id)
         {
-            selectedMovie = await _context.MovieList.Where(m => m.Id == id).ToListAsync();
-            var selectedViews = await _context.Viewing.Where(v => v.MovieId == id).ToListAsync();
-            var salonList = await _context.SalonList.ToListAsync();
-
-            foreach (var item in selectedViews)
-            {
-                item.Salon = salonList.Find(s => s.Id == item.SalonId);
-            }
+            var selectedMovie = await _context.MovieList
+                .Where(m => m.Id == id)
+                .Include(v => v.Viewing)
+                .ThenInclude(s => s.Salon)
+                .ToListAsync();
             
-            selectedMovie[0].Viewing = selectedViews;
+            HttpContext.Session.SetString("SessionMovie", JsonConvert.SerializeObject(selectedMovie));
+            
             if (selectedMovie[0].Title.Contains("Pontus"))
             {
                 return View("DisplayPontus", selectedMovie);
@@ -49,10 +51,15 @@ namespace Labb3WebbMVC.Controllers
             }
         }
 
-        public IActionResult BookTicketView(Viewing viewing)
+        public IActionResult BookTicketView(int id)
         {
-            var selectedViewing = selectedMovie[0].Viewing.Where(v => v.Id == viewing.Id).ToList();
-            return View(selectedViewing);
+            var movieDeserialized = JsonConvert.DeserializeObject<List<Movie>>(
+                HttpContext.Session.GetString("SessionMovie"));
+
+            var viewing = movieDeserialized[0].Viewing.Where(v => v.Id == id).ToList();
+            viewing[0].MovieTitle = movieDeserialized[0].Title;
+
+            return View(viewing);
         }
 
         // GET: Movies/Details/5
