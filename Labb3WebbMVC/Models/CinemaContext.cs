@@ -19,12 +19,3 @@ namespace Labb3WebbMVC.Models
         }
     }
 }
-
-/*
- * TODO:
- * Move Salon to the viewing-model.
-  That way, every viewing will have an option for a separate salon
-  Every viewing will then have separate seats as well.
-
- * Once the above is implemented, start working on a booking page for a specific viewing.
-*/

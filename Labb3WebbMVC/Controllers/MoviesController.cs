@@ -14,14 +14,10 @@ namespace Labb3WebbMVC.Controllers
     public class MoviesController : Controller
     {
         private readonly CinemaContext _context;
-        //private List<Movie> selectedMovie;
-        // Spara ner selectedMovie i javascript istället
-        // Skicka sedan in det med parametrar i metoderna som behvöer det (t.ex. BookTicketView)
 
         public MoviesController(CinemaContext context)
         {
             _context = context;
-            //selectedMovie = new List<Movie>();
         }
 
         // GET: Movies
@@ -61,6 +57,11 @@ namespace Labb3WebbMVC.Controllers
             var viewing = (Viewing)viewingToCast[0];
 
             return View(viewing);
+        }
+
+        public void FinalizeBooking()
+        {
+
         }
 
         // GET: Movies/Details/5

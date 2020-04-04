@@ -30,12 +30,8 @@ namespace Labb3WebbMVC
             );
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
-            services.AddMemoryCache(); // Not distributed - deployed to single server.
+            services.AddMemoryCache();
             services.AddSession();
-
-            //services.AddSession(options => {
-            //    options.IdleTimeout = TimeSpan.FromMinutes(5);
-            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

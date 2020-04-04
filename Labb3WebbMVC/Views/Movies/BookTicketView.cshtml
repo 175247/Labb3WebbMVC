@@ -5,18 +5,61 @@
 
 @model Labb3WebbMVC.Models.Viewing
 
+
+    <form asp-action="FinalizeBooking" asp-controller="Movies" method="post">
+        <div>
+            <label>Title: @Html.DisplayFor(model => model.MovieTitle)</label>
+        </div>
+        <div>
+            <label>Starts: @Html.DisplayFor(model => model.StartTime)</label>
+        </div>
+        <div>
+            <label>Salon: @Html.DisplayFor(model => model.Salon.Number)</label>
+        </div>
+        <div>
+            <label>Remaining Seats: @Html.DisplayFor(model => model.Salon.RemainingSeats)</label>
+        </div>
+        <div>
+            <label>Number of tickets:</label>
+            <select>
+                @{
+                    int minSeats = 0;
+                    if (Model.Salon.RemainingSeats != 0)
+                    {
+                        minSeats = 1;
+                        <option value="0">Select</option>
+                        @for (int i = minSeats; i < Model.Salon.RemainingSeats; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="0">Unavailable</option>
+                    }
+                }
+            </select>
+        </div>
+        <div>
+            <button type="submit" id="finalizeBookingButton">Book!</button>
+        </div>
+    </form>
+
 <div>
-<table class="table table-striped">
-    <tr>
-        <td>@Html.DisplayFor(model => model.Id)</td>
-        <td>@Html.DisplayFor(model => model.MovieId)</td>
-        <td>@Html.DisplayFor(model => model.MovieTitle)</td>
-        <td>@Html.DisplayFor(model => model.Salon.Id)</td>
-        <td>@Html.DisplayFor(model => model.Salon.Number)</td>
-        <td>@Html.DisplayFor(model => model.Salon.RemainingSeats)</td>
-        <td>@Html.DisplayFor(model => model.Salon.SeatCapacity)</td>
-        <td>@Html.DisplayFor(model => model.Salon)</td>
-        <td>@Html.DisplayFor(model => model.StartTime)</td>
-    </tr>
-</table>
+    <table class="table table-striped">
+        <tr>
+            <td>Title:
+                @Html.DisplayFor(model => model.MovieTitle)
+            </td>
+            <td>Start time:
+                @Html.DisplayFor(model => model.StartTime)
+            </td>
+            <td>Salon:
+                @Html.DisplayFor(model => model.Salon.Number)
+            </td>
+            <td>Remaining seats:
+                @Html.DisplayFor(model => model.Salon.RemainingSeats)
+            </td>
+        </tr>
+    </table>
 </div>
