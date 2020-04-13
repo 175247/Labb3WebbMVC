@@ -35,9 +35,9 @@
                             </td>
                             <td>@Html.DisplayFor(modelItem => show.Salon.RemainingSeats)</td>
                             <td>
-                                @if(show.Salon.RemainingSeats == 0)
+                                @if(show.Salon.RemainingSeats <= 0)
                                 {
-                                    <button class="btn-danger"disabled>Sold out</button>
+                                    <button class="soldOut btn btn-danger btn-sm">Sold out</button>
                                 }
                                 else
                                 {

@@ -56,12 +56,49 @@ namespace Labb3WebbMVC.Controllers
             viewingToCast[0].MovieTitle = movieDeserialized[0].Title;
             var viewing = (Viewing)viewingToCast[0];
 
+            //HttpContext.Session.SetString("SessionViewing", JsonConvert.SerializeObject(viewing));
+
             return View(viewing);
         }
 
-        public void FinalizeBooking()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FinalizeBooking(int id, [Bind("Id,StartTime,MovieId,MovieTitle, SalonId, Salon")] Viewing viewingModel)
         {
+            if (id != viewingModel.Id)
+            {
+                return NotFound();
+            }
 
+            if (ModelState.IsValid)
+            {
+                var salonFromDb = await _context.SalonList.Where(s => s.Id == viewingModel.SalonId).ToListAsync();
+                var salonSeats = (Salon)salonFromDb[0];
+                if (salonSeats.RemainingSeats > 0)
+                {
+                    salonSeats.RemainingSeats -= viewingModel.Salon.RemainingSeats;
+                    viewingModel.Salon = salonSeats;
+
+                    try
+                    {
+                        _context.Update(salonSeats);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!MovieExists(viewingModel.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return View(viewingModel);
+                }
+            }
+            return View("BookingConfirmation", viewingModel);
         }
 
         // GET: Movies/Details/5

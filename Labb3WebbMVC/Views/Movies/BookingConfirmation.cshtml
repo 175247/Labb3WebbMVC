@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewData["Title"] = "BookingConfirmation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Labb3WebbMVC.Models.Viewing
+
+<h1> Welcome to the confirmation page</h1>
+<form>
+    <div id="receiptDiv">
+        <label asp-for="MovieTitle"></label>
+        <input asp-for="MovieTitle" class="form-control col-3" readonly="readonly" />
+        <label asp-for="Salon"></label>
+        <input asp-for="Salon.Number" class="form-control col-3" readonly="readonly" />
+        <label asp-for="StartTime"></label>
+        <input asp-for="StartTime" class="form-control col-3" readonly="readonly" />
+
+    </div>
+</form>
+
