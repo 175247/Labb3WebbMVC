@@ -2,25 +2,21 @@
 @{
     ViewData["Title"] = "DisplayMovieInfo";
 }
-@model IEnumerable<Labb3WebbMVC.Models.Movie>
+@model Labb3WebbMVC.Models.Movie
 
 <br />
 
 <iframe class="trailerFrame" src="https://www.youtube.com/embed/D4eJx-0g3Do" allow="accelerometer;" allowfullscreen></iframe>
 <div class="movieInfo">
-
-    @foreach (var item in Model)
-    {
-        <h1>
-            @Html.DisplayFor(modelItem => item.Title)
-            <span id="movieRating">Rating: @Html.DisplayFor(modelItem => item.Rating)</span>
-        </h1>
-    }
+    <h1>
+        @Html.DisplayFor(modelItem => modelItem.Title)
+        <span id="movieRating">Rating: @Html.DisplayFor(modelItem => modelItem.Rating)</span>
+    </h1>
     <p>
         A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.
     </p>
 </div>
 
 @{
-    await Html.RenderPartialAsync("_PartialDisplayMovieInfo", Model);
+    await Html.RenderPartialAsync("_PartialDisplayMovieInfo");
 }

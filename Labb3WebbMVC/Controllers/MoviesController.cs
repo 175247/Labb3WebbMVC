@@ -34,16 +34,16 @@ namespace Labb3WebbMVC.Controllers
                 .Include(v => v.Viewing)
                 .ThenInclude(s => s.Salon)
                 .ToListAsync();
-            
+
             HttpContext.Session.SetString("SessionMovie", JsonConvert.SerializeObject(selectedMovie));
-            
+
             if (selectedMovie[0].Title.Contains("Pontus"))
             {
-                return View("DisplayPontus", selectedMovie);
+                return View("DisplayPontus", selectedMovie[0]);
             }
             else
             {
-                return View(selectedMovie);
+                return View(selectedMovie[0]);
             }
         }
 

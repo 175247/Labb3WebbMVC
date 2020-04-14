@@ -1,6 +1,6 @@
 ﻿<link rel="stylesheet" href="~/css/partialMovieInfo.css" />
 
-@model IEnumerable<Labb3WebbMVC.Models.Movie>
+@model Labb3WebbMVC.Models.Movie
 
 <div class="border p-3 mt-3">
     <table class="table table-striped">
@@ -21,37 +21,29 @@
             }
             else
             {
-                @foreach (var item in Model)
+                @foreach (var show in Model.Viewing)
                 {
-                    @foreach (var show in item.Viewing)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => show.StartTime)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => show.Salon.Number)
-                            </td>
-                            <td>@Html.DisplayFor(modelItem => show.Salon.RemainingSeats)</td>
-                            <td>
-                                @if (show.Salon.RemainingSeats <= 0)
-                                {
-                                    <button class="soldOut btn btn-danger btn-sm">Sold out</button>
-                                }
-                                else
-                                {
-                                    <a asp-action="BookTicketView" asp-route-id="@show.Id" asp-controller="Movies" class="btn btn-success btn-sm">Book tickets!</a>
-                                }
-                            </td>
-                        </tr>
-                    }
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => show.StartTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => show.Salon.Number)
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => show.Salon.RemainingSeats)</td>
+                        <td>
+                            @if (show.Salon.RemainingSeats <= 0)
+                            {
+                                <button class="soldOut btn btn-danger btn-sm">Sold out</button>
+                            }
+                            else
+                            {
+                                <a asp-action="BookTicketView" asp-route-id="@show.Id" asp-controller="Movies" class="btn btn-success btn-sm">Book tickets!</a>
+                            }
+                        </td>
+                    </tr>
                 }
             }
         </thead>
     </table>
 </div>
-
-@section Scripts{
-    <script>
-    </script>
-}
