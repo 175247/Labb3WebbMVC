@@ -36,14 +36,7 @@
                                 @Html.DisplayFor(modelItem => item.Duration)
                             </td>
                             <td>
-                                @if (item.Title == "Pontus, Bouncer of Shangri-La")
-                                {
-                                    <a asp-action="DisplayPontus" asp-route-id="@item.Id" asp-controller="Movies" class="btn btn-success btn-sm">See Movie info</a>
-                                }
-                                else
-                                {
                                     <a asp-action="DisplayMovieInfo" asp-route-id="@item.Id" asp-controller="Movies" class="btn btn-success btn-sm">See Movie info</a>
-                                }
                             </td>
                         </tr>
                     }
