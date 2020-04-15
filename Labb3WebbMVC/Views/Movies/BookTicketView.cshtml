@@ -46,7 +46,7 @@
         <span asp-validation-for="Salon.RemainingSeats"></span>
     </div>
     <div>
-        <button type="submit" id="finalizeBookingButton" class="btn btn-success">Book!</button>
+        <button type="submit" asp-action="FinalizeBooking" asp-controller="Movies" class="btn btn-success">Book!</button>
         <button onclick="history.go(-1)" class="btn btn-danger">Cancel</button>
     </div>
 </form>

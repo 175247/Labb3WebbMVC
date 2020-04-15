@@ -15,6 +15,9 @@ namespace Labb3WebbMVC.Controllers
     {
         private readonly CinemaContext _context;
 
+        [BindProperty]
+        public Viewing Viewing { get; set; }
+
         public MoviesController(CinemaContext context)
         {
             _context = context;
@@ -63,30 +66,35 @@ namespace Labb3WebbMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> FinalizeBooking(int id, [Bind("Id,StartTime,MovieId,MovieTitle, SalonId, Salon")] Viewing viewingModel)
+        public async Task<IActionResult> FinalizeBooking(int id, [Bind("Id,StartTime,MovieId,MovieTitle, SalonId, Salon")] Viewing receivedModel)
         {
-            if (id != viewingModel.Id)
+            if (id != receivedModel.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                var salonFromDb = await _context.SalonList.Where(s => s.Id == viewingModel.SalonId).ToListAsync();
-                var salonSeats = (Salon)salonFromDb[0];
-                if (salonSeats.RemainingSeats > 0)
+                var salonFromDb = await _context.SalonList.Where(s => s.Id == receivedModel.SalonId).ToListAsync();
+                var salon = (Salon)salonFromDb[0];
+
+                if (salon.RemainingSeats <= 0)
                 {
-                    salonSeats.RemainingSeats -= viewingModel.Salon.RemainingSeats;
-                    viewingModel.Salon = salonSeats;
+                    return View("BookTicketView", receivedModel);
+                }
+                else
+                {
+                    salon.RemainingSeats -= receivedModel.Salon.RemainingSeats;
+                    receivedModel.Salon = salon;
 
                     try
                     {
-                        _context.Update(salonSeats);
+                        _context.Update(salon);
                         await _context.SaveChangesAsync();
                     }
                     catch (DbUpdateConcurrencyException)
                     {
-                        if (!MovieExists(viewingModel.Id))
+                        if (!MovieExists(receivedModel.Id))
                         {
                             return NotFound();
                         }
@@ -95,10 +103,20 @@ namespace Labb3WebbMVC.Controllers
                             throw;
                         }
                     }
-                    return View(viewingModel);
+                    return RedirectToAction("BookingConfirmation", receivedModel);
                 }
             }
-            return View("BookingConfirmation", viewingModel);
+            return View("BookTicketView", receivedModel);
+        }
+
+        public async Task<IActionResult> BookingConfirmation(Viewing viewing)
+        {
+            var salon = await _context.SalonList.Where(s => s.Id == viewing.SalonId).ToListAsync();
+            viewing.Salon = salon[0];
+            //var viewing = await _context.Viewing.Where(v => v.Id == id).Include(s => s.Salon).ToListAsync();
+            //var movieTitle = await _context.MovieList.FirstOrDefaultAsync(v => v.Id == viewing[0].MovieId);
+            var receipt = viewing;
+            return View(receipt);
         }
 
         // GET: Movies/Details/5
