@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Labb3WebbMVC.Models;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Labb3WebbMVC.Controllers
 {
@@ -30,6 +31,22 @@ namespace Labb3WebbMVC.Controllers
             return View(await _context.MovieList.ToListAsync());
         }
 
+        public async Task<IActionResult> Sorting(int id, string order)
+        {
+            var movie = await _context.MovieList.Where(m => m.Id == id).Include(v => v.Viewing).ThenInclude(s => s.Salon).ToListAsync();
+            
+            if (order == "times")
+            {
+                movie[0].Viewing = movie[0].Viewing.OrderByDescending(v => v.StartTime).ToList();
+            }
+            else if (order == "seats")
+            {
+                movie[0].Viewing = movie[0].Viewing.OrderByDescending(s => s.Salon.RemainingSeats).ToList();
+            }
+
+            return View("DisplayMovieInfo", movie[0]);
+        }
+
         public async Task<IActionResult> DisplayMovieInfo(int id)
         {
             var selectedMovie = await _context.MovieList
@@ -40,14 +57,7 @@ namespace Labb3WebbMVC.Controllers
 
             HttpContext.Session.SetString("SessionMovie", JsonConvert.SerializeObject(selectedMovie));
 
-            if (selectedMovie[0].Title.Contains("Pontus"))
-            {
-                return View("DisplayPontus", selectedMovie[0]);
-            }
-            else
-            {
-                return View(selectedMovie[0]);
-            }
+            return View(selectedMovie[0]);
         }
 
         public IActionResult BookTicketView(int id)

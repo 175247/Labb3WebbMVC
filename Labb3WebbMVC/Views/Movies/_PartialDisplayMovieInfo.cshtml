@@ -6,9 +6,9 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Start Time</th>
+                <th><a asp-action="Sorting" asp-route-id="@Model.Id" asp-route-order="times">Start Time</a></th>
                 <th>Salon</th>
-                <th>Seats Left</th>
+                <th><a asp-action="Sorting" asp-route-id="@Model.Id" asp-route-order="seats">Seats Left</a></th>
                 <td></td>
             </tr>
             @if (Model == null)
