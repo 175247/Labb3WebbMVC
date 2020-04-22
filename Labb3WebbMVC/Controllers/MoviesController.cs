@@ -31,10 +31,21 @@ namespace Labb3WebbMVC.Controllers
             return View(await _context.MovieList.ToListAsync());
         }
 
+        public async Task<List<Movie>> GetSpecificMovie(int id)
+        {
+            var movie = await _context.MovieList
+                .Where(m => m.Id == id)
+                .Include(v => v.Viewing)
+                .ThenInclude(s => s.Salon)
+                .ToListAsync();
+
+            return movie;
+        }
+
         public async Task<IActionResult> Sorting(int id, string order)
         {
-            var movie = await _context.MovieList.Where(m => m.Id == id).Include(v => v.Viewing).ThenInclude(s => s.Salon).ToListAsync();
-            
+            var movie = await GetSpecificMovie(id);
+
             if (order == "times")
             {
                 movie[0].Viewing = movie[0].Viewing.OrderByDescending(v => v.StartTime).ToList();
@@ -49,11 +60,7 @@ namespace Labb3WebbMVC.Controllers
 
         public async Task<IActionResult> DisplayMovieInfo(int id)
         {
-            var selectedMovie = await _context.MovieList
-                .Where(m => m.Id == id)
-                .Include(v => v.Viewing)
-                .ThenInclude(s => s.Salon)
-                .ToListAsync();
+            var selectedMovie = await GetSpecificMovie(id);
 
             HttpContext.Session.SetString("SessionMovie", JsonConvert.SerializeObject(selectedMovie));
 
