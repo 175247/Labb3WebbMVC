@@ -11,8 +11,10 @@ namespace Labb3WebbMVC.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public int Number { get; set; }
         public int SeatCapacity { get; set; }
+        [Required]
         public int RemainingSeats { get; set; }
     }
 }

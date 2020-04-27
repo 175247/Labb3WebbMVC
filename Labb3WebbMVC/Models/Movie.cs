@@ -10,6 +10,7 @@ namespace Labb3WebbMVC.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string Title { get; set; }
         public string Duration { get; set; }
         public string Rating { get; set; }

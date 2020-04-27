@@ -22,6 +22,7 @@
     </div>
     <div>
         <label>Salon: @Html.DisplayFor(model => model.Salon.Number)</label>
+        <span asp-validation-for="Salon.Number"></span>
     </div>
     <div>
         <label>Remaining Seats: @Html.DisplayFor(model => model.Salon.RemainingSeats)</label>
@@ -47,6 +48,6 @@
     </div>
     <div>
         <button type="submit" asp-action="FinalizeBooking" asp-controller="Movies" class="btn btn-success">Book!</button>
-        <button onclick="history.go(-1)" class="btn btn-danger">Cancel</button>
+        <a asp-action="Index" asp-controller="Movies" class="btn btn-danger">CANCEL</a>
     </div>
 </form>

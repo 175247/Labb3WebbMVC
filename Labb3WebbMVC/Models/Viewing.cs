@@ -11,10 +11,12 @@ namespace Labb3WebbMVC.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public DateTime StartTime { get; set; }
         public int MovieId { get; set; }
         public string MovieTitle { get; set; }
         public int SalonId { get; set; }
+        [Required]
         public Salon Salon { get; set; }
     }
 }

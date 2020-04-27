@@ -76,8 +76,6 @@ namespace Labb3WebbMVC.Controllers
             viewingToCast[0].MovieTitle = movieDeserialized[0].Title;
             var viewing = (Viewing)viewingToCast[0];
 
-            //HttpContext.Session.SetString("SessionViewing", JsonConvert.SerializeObject(viewing));
-
             return View(viewing);
         }
 
