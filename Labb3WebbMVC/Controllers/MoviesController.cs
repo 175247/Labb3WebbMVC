@@ -39,7 +39,7 @@ namespace Labb3WebbMVC.Controllers
             return movie;
         }
 
-        public async Task<IActionResult> Sorting(int id, string order)
+        public async Task<IActionResult> Sorting(int id, string sortOrder)
         {
             var movie = await GetSpecificMovie(id);
 
@@ -48,11 +48,11 @@ namespace Labb3WebbMVC.Controllers
                 return View("Index");
             }
 
-            if (order == "times")
+            if (sortOrder == "byTimesDescending")
             {
                 movie[0].Viewing = movie[0].Viewing.OrderByDescending(v => v.StartTime).ToList();
             }
-            else if (order == "seats")
+            else if (sortOrder == "bySeatsDescending")
             {
                 movie[0].Viewing = movie[0].Viewing.OrderByDescending(s => s.Salon.RemainingSeats).ToList();
             }

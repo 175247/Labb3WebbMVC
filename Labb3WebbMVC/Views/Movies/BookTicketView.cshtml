@@ -1,11 +1,8 @@
-﻿
-@{
-    ViewData["Title"] = "BookTicketView";
+﻿@{
     int maxSeatsToBook = 0;
 }
 
 @model Labb3WebbMVC.Models.Viewing
-
 
 <form asp-action="FinalizeBooking" asp-controller="Movies" method="post">
     <input type="hidden" asp-for="Id" />
