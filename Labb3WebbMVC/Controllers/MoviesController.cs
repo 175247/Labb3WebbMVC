@@ -16,9 +16,6 @@ namespace Labb3WebbMVC.Controllers
     {
         private readonly CinemaContext _context;
 
-        [BindProperty]
-        public Viewing Viewing { get; set; }
-
         public MoviesController(CinemaContext context)
         {
             _context = context;
@@ -46,6 +43,11 @@ namespace Labb3WebbMVC.Controllers
         {
             var movie = await GetSpecificMovie(id);
 
+            if (movie.Count == 0)
+            {
+                return View("Index");
+            }
+
             if (order == "times")
             {
                 movie[0].Viewing = movie[0].Viewing.OrderByDescending(v => v.StartTime).ToList();
@@ -62,6 +64,11 @@ namespace Labb3WebbMVC.Controllers
         {
             var selectedMovie = await GetSpecificMovie(id);
 
+            if (selectedMovie.Count == 0)
+            {
+                return View("Index");
+            }
+
             HttpContext.Session.SetString("SessionMovie", JsonConvert.SerializeObject(selectedMovie));
 
             return View(selectedMovie[0]);
@@ -73,6 +80,7 @@ namespace Labb3WebbMVC.Controllers
                 HttpContext.Session.GetString("SessionMovie"));
 
             var viewingToCast = movieDeserialized[0].Viewing.Where(v => v.Id == id).ToList();
+
             viewingToCast[0].MovieTitle = movieDeserialized[0].Title;
             var viewing = (Viewing)viewingToCast[0];
 
@@ -97,121 +105,18 @@ namespace Labb3WebbMVC.Controllers
                 {
                     return View("BookTicketView", receivedModel);
                 }
-                else
-                {
-                    salon.RemainingSeats -= receivedModel.Salon.RemainingSeats;
-                    receivedModel.Salon = salon;
+                
+                salon.RemainingSeats -= receivedModel.Salon.RemainingSeats;
+                receivedModel.Salon = salon;
 
-                    try
-                    {
-                        _context.Update(salon);
-                        await _context.SaveChangesAsync();
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
-                        if (!MovieExists(receivedModel.Id))
-                        {
-                            return NotFound();
-                        }
-                        else
-                        {
-                            throw;
-                        }
-                    }
-                    return RedirectToAction("BookingConfirmation", receivedModel);
-                }
-            }
-            return View("BookTicketView", receivedModel);
-        }
-
-        public async Task<IActionResult> BookingConfirmation(Viewing viewing)
-        {
-            var salon = await _context.SalonList.Where(s => s.Id == viewing.SalonId).ToListAsync();
-            viewing.Salon = salon[0];
-            //var viewing = await _context.Viewing.Where(v => v.Id == id).Include(s => s.Salon).ToListAsync();
-            //var movieTitle = await _context.MovieList.FirstOrDefaultAsync(v => v.Id == viewing[0].MovieId);
-            var receipt = viewing;
-            return View(receipt);
-        }
-
-        // GET: Movies/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var movie = await _context.MovieList
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (movie == null)
-            {
-                return NotFound();
-            }
-
-            return View(movie);
-        }
-
-        // GET: Movies/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Movies/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Duration,StartingTime")] Movie movie)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(movie);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(movie);
-        }
-
-        // GET: Movies/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var movie = await _context.MovieList.FindAsync(id);
-            if (movie == null)
-            {
-                return NotFound();
-            }
-            return View(movie);
-        }
-
-        // POST: Movies/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Duration,StartingTime")] Movie movie)
-        {
-            if (id != movie.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
                 try
                 {
-                    _context.Update(movie);
+                    _context.Update(salon);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MovieExists(movie.Id))
+                    if (!MovieExists(receivedModel.Id))
                     {
                         return NotFound();
                     }
@@ -220,38 +125,18 @@ namespace Labb3WebbMVC.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("BookingConfirmation", receivedModel);
             }
-            return View(movie);
+            return View("BookTicketView", receivedModel);
         }
 
-        // GET: Movies/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> BookingConfirmation(Viewing viewing)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var salon = await _context.SalonList.Where(s => s.Id == viewing.SalonId).ToListAsync();
+            viewing.Salon = salon[0];
+            var receipt = viewing;
 
-            var movie = await _context.MovieList
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (movie == null)
-            {
-                return NotFound();
-            }
-
-            return View(movie);
-        }
-
-        // POST: Movies/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var movie = await _context.MovieList.FindAsync(id);
-            _context.MovieList.Remove(movie);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return View(receipt);
         }
 
         private bool MovieExists(int id)
