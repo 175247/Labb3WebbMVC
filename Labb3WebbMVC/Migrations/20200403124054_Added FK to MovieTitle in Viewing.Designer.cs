@@ -4,14 +4,16 @@ using Labb3WebbMVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Labb3WebbMVC.Migrations
 {
     [DbContext(typeof(CinemaContext))]
-    partial class CinemaContextModelSnapshot : ModelSnapshot
+    [Migration("20200403124054_Added FK to MovieTitle in Viewing")]
+    partial class AddedFKtoMovieTitleinViewing
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,14 +34,7 @@ namespace Labb3WebbMVC.Migrations
                     b.Property<string>("Rating")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Synopsis")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TrailerURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

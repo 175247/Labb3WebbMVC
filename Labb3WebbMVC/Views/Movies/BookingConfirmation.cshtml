@@ -1,0 +1,15 @@
+﻿@model Labb3WebbMVC.Models.Viewing
+
+<h1>Booking confirmation:</h1>
+<form>
+    <div id="receiptDiv">
+        <label asp-for="MovieTitle"></label>
+        <input asp-for="MovieTitle" class="form-control col-3" readonly="readonly" />
+        <label asp-for="Salon"></label>
+        <input asp-for="Salon.Number" class="form-control col-3" readonly="readonly" />
+        <label asp-for="StartTime"></label>
+        <input asp-for="StartTime" class="form-control col-3" readonly="readonly" />
+    </div>
+</form>
+<a asp-action="Index" asp-controller="Movies" class="btn btn-success btn-sm mt-2">Back to movielist</a>
+

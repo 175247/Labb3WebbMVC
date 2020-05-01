@@ -4,14 +4,16 @@ using Labb3WebbMVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Labb3WebbMVC.Migrations
 {
     [DbContext(typeof(CinemaContext))]
-    partial class CinemaContextModelSnapshot : ModelSnapshot
+    [Migration("20200401191821_Fixing snapshots")]
+    partial class Fixingsnapshots
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,14 +34,7 @@ namespace Labb3WebbMVC.Migrations
                     b.Property<string>("Rating")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Synopsis")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TrailerURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -78,9 +73,6 @@ namespace Labb3WebbMVC.Migrations
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
-                    b.Property<string>("MovieTitle")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("SalonId")
                         .HasColumnType("int");
 
@@ -98,7 +90,7 @@ namespace Labb3WebbMVC.Migrations
 
             modelBuilder.Entity("Labb3WebbMVC.Models.Viewing", b =>
                 {
-                    b.HasOne("Labb3WebbMVC.Models.Movie", null)
+                    b.HasOne("Labb3WebbMVC.Models.Movie", "Movie")
                         .WithMany("Viewing")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)

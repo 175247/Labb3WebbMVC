@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 
 namespace Labb3WebbMVC.Models
 {
-    public class Salon
+    public class Viewing
     {
         [Key]
         public int Id { get; set; }
         [Required]
-        public int Number { get; set; }
-        public int SeatCapacity { get; set; }
+        public DateTime StartTime { get; set; }
+        public int MovieId { get; set; }
+        public string MovieTitle { get; set; }
+        public int SalonId { get; set; }
         [Required]
-        public int RemainingSeats { get; set; }
+        public Salon Salon { get; set; }
     }
 }

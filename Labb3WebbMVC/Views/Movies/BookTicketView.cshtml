@@ -1,0 +1,50 @@
+﻿@{
+    int maxSeatsToBook = 0;
+}
+
+@model Labb3WebbMVC.Models.Viewing
+
+<form asp-action="FinalizeBooking" asp-controller="Movies" method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="MovieId" />
+    <input type="hidden" asp-for="MovieTitle" />
+    <input type="hidden" asp-for="StartTime" />
+    <input type="hidden" asp-for="Salon" />
+    <input type="hidden" asp-for="SalonId" />
+    <div>
+        <label>Title: @Html.DisplayFor(model => model.MovieTitle)</label>
+    </div>
+    <div>
+        <label>Starts: @Html.DisplayFor(model => model.StartTime)</label>
+    </div>
+    <div>
+        <label>Salon: @Html.DisplayFor(model => model.Salon.Number)</label>
+        <span asp-validation-for="Salon.Number"></span>
+    </div>
+    <div>
+        <label>Remaining Seats: @Html.DisplayFor(model => model.Salon.RemainingSeats)</label>
+    </div>
+    <div>
+        <label>Number of tickets:</label>
+        <select asp-for="Salon.RemainingSeats">
+            @{
+                maxSeatsToBook = Model.Salon.RemainingSeats;
+
+                if (Model.Salon.RemainingSeats > 12)
+                {
+                    maxSeatsToBook = 12;
+                }
+
+                @for (int i = 1; i <= maxSeatsToBook; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="Salon.RemainingSeats"></span>
+    </div>
+    <div>
+        <button type="submit" asp-action="FinalizeBooking" asp-controller="Movies" class="btn btn-success">Book!</button>
+        <a asp-action="Index" asp-controller="Movies" class="btn btn-danger">CANCEL</a>
+    </div>
+</form>

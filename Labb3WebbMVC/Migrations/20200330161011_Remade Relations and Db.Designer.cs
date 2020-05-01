@@ -4,14 +4,16 @@ using Labb3WebbMVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Labb3WebbMVC.Migrations
 {
     [DbContext(typeof(CinemaContext))]
-    partial class CinemaContextModelSnapshot : ModelSnapshot
+    [Migration("20200330161011_Remade Relations and Db")]
+    partial class RemadeRelationsandDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,17 +34,15 @@ namespace Labb3WebbMVC.Migrations
                     b.Property<string>("Rating")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Synopsis")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("SalonId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TrailerURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SalonId");
 
                     b.ToTable("MovieList");
                 });
@@ -78,12 +78,6 @@ namespace Labb3WebbMVC.Migrations
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
-                    b.Property<string>("MovieTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SalonId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
@@ -91,9 +85,14 @@ namespace Labb3WebbMVC.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.HasIndex("SalonId");
-
                     b.ToTable("Viewing");
+                });
+
+            modelBuilder.Entity("Labb3WebbMVC.Models.Movie", b =>
+                {
+                    b.HasOne("Labb3WebbMVC.Models.Salon", "Salon")
+                        .WithMany()
+                        .HasForeignKey("SalonId");
                 });
 
             modelBuilder.Entity("Labb3WebbMVC.Models.Viewing", b =>
@@ -101,12 +100,6 @@ namespace Labb3WebbMVC.Migrations
                     b.HasOne("Labb3WebbMVC.Models.Movie", null)
                         .WithMany("Viewing")
                         .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Labb3WebbMVC.Models.Salon", "Salon")
-                        .WithMany()
-                        .HasForeignKey("SalonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

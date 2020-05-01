@@ -10,9 +10,12 @@ namespace Labb3WebbMVC.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string Title { get; set; }
-        public double Duration { get; set; }
-        public DateTime StartingTime { get; set; }
-        public Salon Salon { get; set; }
+        public string Duration { get; set; }
+        public string Rating { get; set; }
+        public string TrailerURL { get; set; }
+        public string Synopsis { get; set; }
+        public ICollection<Viewing> Viewing { get; set; }
     }
 }

@@ -1,0 +1,49 @@
+﻿<link rel="stylesheet" href="~/css/partialMovieInfo.css" />
+
+@model Labb3WebbMVC.Models.Movie
+
+<div class="border p-3 mt-3">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th><a asp-action="Sorting" asp-route-id="@Model.Id" asp-route-sortOrder="byTimesDescending">Start Time</a></th>
+                <th>Salon</th>
+                <th><a asp-action="Sorting" asp-route-id="@Model.Id" asp-route-sortOrder="bySeatsDescending">Seats Left</a></th>
+                <td></td>
+            </tr>
+            @if (Model == null)
+            {
+                <tr>
+                    <td>
+                        No movies found.
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var show in Model.Viewing)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => show.StartTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => show.Salon.Number)
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => show.Salon.RemainingSeats)</td>
+                        <td>
+                            @if (show.Salon.RemainingSeats <= 0)
+                            {
+                                <button class="soldOut btn btn-danger btn-sm">Sold out</button>
+                            }
+                            else
+                            {
+                                <a asp-action="BookTicketView" asp-route-id="@show.Id" asp-controller="Movies" class="btn btn-success btn-sm">Book tickets!</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </thead>
+    </table>
+</div>

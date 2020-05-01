@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Labb3WebbMVC.Migrations
 {
     [DbContext(typeof(CinemaContext))]
-    [Migration("20200329111122_InitialDbSetup")]
-    partial class InitialDbSetup
+    [Migration("20200501195018_AddingSynpsisAndTrailerURLs")]
+    partial class AddingSynpsisAndTrailerURLs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,21 +28,23 @@ namespace Labb3WebbMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Duration")
-                        .HasColumnType("float");
+                    b.Property<string>("Duration")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SalonId")
-                        .HasColumnType("int");
+                    b.Property<string>("Rating")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("StartingTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Synopsis")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrailerURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SalonId");
 
                     b.ToTable("MovieList");
                 });
@@ -60,16 +62,55 @@ namespace Labb3WebbMVC.Migrations
                     b.Property<int>("RemainingSeats")
                         .HasColumnType("int");
 
+                    b.Property<int>("SeatCapacity")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("SalonList");
                 });
 
-            modelBuilder.Entity("Labb3WebbMVC.Models.Movie", b =>
+            modelBuilder.Entity("Labb3WebbMVC.Models.Viewing", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MovieTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SalonId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
+
+                    b.HasIndex("SalonId");
+
+                    b.ToTable("Viewing");
+                });
+
+            modelBuilder.Entity("Labb3WebbMVC.Models.Viewing", b =>
+                {
+                    b.HasOne("Labb3WebbMVC.Models.Movie", null)
+                        .WithMany("Viewing")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Labb3WebbMVC.Models.Salon", "Salon")
                         .WithMany()
-                        .HasForeignKey("SalonId");
+                        .HasForeignKey("SalonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

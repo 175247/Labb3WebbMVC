@@ -10,11 +10,12 @@ namespace Labb3WebbMVC.Models
     {
         public DbSet<Movie> MovieList { get; set; }
         public DbSet<Salon> SalonList { get; set; }
+        public DbSet<Viewing> Viewing { get; set; }
 
         public CinemaContext(DbContextOptions<CinemaContext> options)
             : base(options)
         {
-
+            
         }
     }
 }
