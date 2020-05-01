@@ -14,6 +14,8 @@ namespace Labb3WebbMVC.Models
         public string Title { get; set; }
         public string Duration { get; set; }
         public string Rating { get; set; }
+        public string TrailerURL { get; set; }
+        public string Synopsis { get; set; }
         public ICollection<Viewing> Viewing { get; set; }
     }
 }

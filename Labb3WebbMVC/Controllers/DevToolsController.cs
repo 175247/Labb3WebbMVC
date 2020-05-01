@@ -28,6 +28,10 @@ namespace Labb3WebbMVC.Controllers
                     Title = "Pontus: Bouncer of Shangri-La",
                     Duration = "13h 37min",
                     Rating = "5/7",
+                    TrailerURL = "https://www.youtube.com/embed/KAOdjqyG37A",
+                    Synopsis = "Wayward prince and heir to the Bhutan throne, is crowned King Pontus I after an alien attack robs the earth of all lions. " +
+                    "Now the young king must navigate palace politics, the lack of roars left behind, and the emotional strings of his past life as a russian hacker. " +
+                    "Watch it now, blyat! Rawr...",
                     Viewing = new List<Viewing>
                     {
                         new Viewing
@@ -68,6 +72,8 @@ namespace Labb3WebbMVC.Controllers
                     Title = "The Matrix",
                     Duration = "2h 16min",
                     Rating = "8.7/10",
+                    TrailerURL = "https://www.youtube.com/embed/D4eJx-0g3Do",
+                    Synopsis = "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
                     Viewing = new List<Viewing>
                     {
                         new Viewing
