@@ -1,16 +1,21 @@
 ﻿@model Labb3WebbMVC.Models.Movie
 
 <br />
+<div class="card">
+    <div class="card-header">
     <iframe class="trailerFrame" src="@Model.TrailerURL" allow="accelerometer;" allowfullscreen></iframe>
-    <div class="movieInfo">
+
+    </div>
+    <div class="card-body">
         <h1>
             @Html.DisplayFor(modelItem => modelItem.Title)
             <span id="movieRating">Rating: @Html.DisplayFor(modelItem => modelItem.Rating)</span>
         </h1>
-        <p>
+        <p class="card-text">
             @Model.Synopsis
         </p>
     </div>
+</div>
 @{
     await Html.RenderPartialAsync("_PartialDisplayMovieInfo");
 }
